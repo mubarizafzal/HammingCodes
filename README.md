@@ -4,10 +4,12 @@ A work in progress. Learning project for C programming.
   - what are parity bits?
   - history
 - complexity/features?
+  - single error correction, double error detection (SECDED)
+  - target data size?
 - functionality demonstration
 - key topics
 
-Project concept taken from [Nifty Assignments](nifty.stanford.edu/2011/hansen-hamming-codes/).
+Project concept taken from [Nifty Assignments](http://nifty.stanford.edu/2011/hansen-hamming-codes/).
 
 
 Hamming Codes:
