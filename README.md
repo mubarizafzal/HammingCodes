@@ -1,7 +1,14 @@
 A work in progress. Learning project for C programming.
 
 - what are haming codes?
+  - what are parity bits?
+  - history
 - complexity/features?
+- functionality demonstration
+- key topics
+
+Project concept taken from [Nifty Assignments](nifty.stanford.edu/2011/hansen-hamming-codes/).
+
 
 Hamming Codes:
 
