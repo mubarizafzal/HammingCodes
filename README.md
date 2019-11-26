@@ -5,6 +5,7 @@ A work in progress. Learning project for C programming.
   - history
 - complexity/features?
   - single error correction, double error detection (SECDED)
+    - Hamming (13, 8)
   - target data size?
 - functionality demonstration
 - key topics
