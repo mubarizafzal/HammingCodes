@@ -21,6 +21,14 @@ int main () {
       printf("%X\n", byte); // as hexadecimal
       printBinary(byte); // as binary
       putchar('\n');
+      printBinary(byte<<1);
+      putchar('\n');
+      printBinary(byte>>1);
+      putchar('\n');
+      printBinary(~byte);
+      putchar('\n');
+      printBinary(byte^5); // 5 as a literal is 4 bits, so only first 4 bits are affected
+      putchar('\n');
     }
   }
 
