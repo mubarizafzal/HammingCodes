@@ -7,9 +7,9 @@ void printBinary (unsigned char byte)
 {
     int numBits = CHAR_BIT; 
     
-    while(numBits--) { // is false when i = 0, i.e end of byte
+    while(numBits--) { // is false when numBits = 0, i.e end of byte
     
-        putchar('0' + ((byte >> numBits) & 1));
+        putchar('0' + ((byte >> numBits) & 1)); // '& 1' causes only the rightmost bit to be added
     }
 }
 
@@ -17,6 +17,8 @@ unsigned char hamming_13_8 (unsigned char byte) {
   // input in form 0000xxxx
   
   // binary or hexadecimal literals?
+  
+  unsigned char temp = 0x00;
     
   
   return byte;
@@ -36,12 +38,15 @@ int main () {
       putchar('\n');
       printBinary(byte>>1);
       putchar('\n');
-      printBinary(~byte);
+      printBinary(0x00);
+      putchar('\n');
+      printBinary(0xff);
       putchar('\n');
       printBinary(byte^53); // 53 as a literal is the same bit sequence as '5'
       putchar('\n');
     }
   }
+  
   
   int num = 2;
   num>>1;
