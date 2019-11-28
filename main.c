@@ -27,7 +27,12 @@ unsigned char hamming_13_8 (unsigned char byte) {
 int main () {
 
   unsigned char byte; // size of char is 1 byte 
+  // to what degree is the byte used through the program
+  // byte to matrix function?
 
+  // matrix = [[1, 2], [3, 4]]
+  // 1 2
+  // 3 4
 
   while (scanf("%c", &byte) != EOF) {
     if (byte != '\n') {
