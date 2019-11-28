@@ -1,4 +1,23 @@
-A work in progress. Learning project for C programming.
+A work in progress. A learning project for C programming.
+
+Project concept taken from [Nifty Assignments](http://nifty.stanford.edu/2011/hansen-hamming-codes/).
+
+
+Relevant topics:
+  - Error correcting codes that use parity bits
+    - Single Error Correction bits (SEC) and Double Error Detection Bits (DED)
+  - Binary representation and manipulation of data
+  - Matrix multiplication
+  - Binary I/O
+
+
+What are parity bits and how are they used?
+
+
+
+This implementation:
+
+
 
 - what are haming codes?
   - what are parity bits?
@@ -10,7 +29,6 @@ A work in progress. Learning project for C programming.
 - functionality demonstration
 - key topics
 
-Project concept taken from [Nifty Assignments](http://nifty.stanford.edu/2011/hansen-hamming-codes/).
 
 
 Hamming Codes:
