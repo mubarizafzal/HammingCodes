@@ -15,6 +15,9 @@ all: $(EXE)
 $(EXE):
 	$(CC) $(CFLAGS) $(INCLUDE) $(SOURCES) -o $(EXE) $(LINK)
 
+clean:
+	rm $(EXE)
+
 c:
 	rm $(EXE)
 
