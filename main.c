@@ -29,12 +29,37 @@ unsigned char hamming_13_8 (unsigned char byte) {
 // C4 - SEC parity bit - covers 4, 5, 6, 7, 12
 // C8 - SEC parity bit - covers 8, 9, 10, 11, 12  
 
+// matrices
+// D12 = 1000 0000
+// D11 = 0100 0000
+// D10 = 0010 0000
+// D9  = 0001 0000
+// C8  = 1111 0000
+// D7  = 0000 1000
+// D6  = 0000 0100
+// D5  = 0000 0010
+// C4  = 1000 1110
+// D3  = 0000 0001
+// C2  = 0110 1101
+// C1  = 0101 1011
+// C0  = 0001 1111 1111 1110 (check entire result, which is 16 bit - 2 bytes)
+
+// if 1 after adding, set to 1, if 0 after adding, set to 0
+
 
 int main () {
 
   unsigned char byte; // size of char is 1 byte 
-  // to what degree is the byte used through the program
+  
   // byte to matrix function?
+
+  // adding bytes and storing into a short !!
+  
+  
+  // (1 * 8) * (8 * 13) = 1 * 13
+  // 1 byte * 13 bytes one by one, into a 16 bit short
+
+
 
   // matrix = [[1, 2], [3, 4]]
   // 1 2
@@ -53,7 +78,10 @@ int main () {
       putchar('\n');
       printBinary(0xff);
       putchar('\n');
-      printBinary(byte^53); // 53 as a literal is the same bit sequence as '5'
+      unsigned char test = 23;
+      printBinary(test); // sets test to same value as 23 literal
+      putchar('\n');
+      printBinary(byte^53); // 53 as a literal is the same bit sequence as '5' <- char
       putchar('\n');
     }
   }
@@ -66,6 +94,7 @@ int main () {
   printf("inc a char by a literal: %c\n", '0' + 2); // %c is '2'
 
   printf("a char is %d byte(s) large\n", sizeof(char));
+  printf("a short is %d byte(s) large\n", sizeof(unsigned short));
 
 }
   
