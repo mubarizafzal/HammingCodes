@@ -39,38 +39,29 @@ unsigned char hamming13_8 (unsigned char byte) {
   unsigned short result = 0;
   int length = 12;
   
-  while (length--) {
-    
-    printf("%d \n", length);  
-  
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  // binary or hexadecimal literals?
-  
   unsigned char setBit = 0;
   int numBits = CHAR_BIT;
   
-  while (numBits--) {
-    
-    // 1111 1111
-    
-    setBit = setBit ^ (((byte >> numBits) & 1) & ((matrix[4] >> numBits) & 1));
-  }
   
-  printBinary(setBit); // odd or even
-  putchar('\n'); 
-  
-  
-  unsigned char temp = 0x00;
+  while (length--) {
     
+    if (length == 4) {
+      
+      while (numBits--) {
+        
+    
+        setBit = setBit ^ (((byte >> numBits) & 1) & ((matrix[4] >> numBits) & 1));
+      }
+      
+      printBinary(setBit); // odd or even
+      putchar('\n'); 
+      
+      // saving into result
+      
+    
+    }  
+  
+  }  
   
   return byte;
 }
