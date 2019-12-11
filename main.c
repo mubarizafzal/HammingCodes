@@ -16,15 +16,58 @@ unsigned char hamming13_8 (unsigned char byte) {
   // input is full 8 bits, as is
   // 0110 1011 - 107
   
-  unsigned char D12 = 0x80;
-  unsigned char C8 = 0xf0;
-  printf("D12 is : ");
-  printBinary(D12);
-  putchar('\n'); 
-  printf("C8 is : ");
-  printBinary(C8);
-  putchar('\n'); 
+  
+  // matrix of length 12, starting from D12 until C1
+  
+  unsigned char matrix[12] = {
+    0x80, // D12 = 1000 0000
+    0x40, // D11 = 0100 0000    
+    0x20, // D10 = 0010 0000
+    0x10, // D9  = 0001 0000
+    0xf0, // C8  = 1111 0000
+    0x08, // D7  = 0000 1000
+    0x06, // D6  = 0000 0100
+    0x04, // D5  = 0000 0010
+    0x8e, // C4  = 1000 1110
+    0x01, // D3  = 0000 0001
+    0x6d, // C2  = 0110 1101
+    0x7b, // C1  = 0101 1011
+
+  
+  };
+  
+  unsigned short result = 0;
+  int length = 12;
+  
+  while (length--) {
+    
+    printf("%d \n", length);  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
   // binary or hexadecimal literals?
+  
+  unsigned char setBit = 0;
+  int numBits = CHAR_BIT;
+  
+  while (numBits--) {
+    
+    // 1111 1111
+    
+    setBit = setBit ^ (((byte >> numBits) & 1) & ((matrix[4] >> numBits) & 1));
+  }
+  
+  printBinary(setBit); // odd or even
+  putchar('\n'); 
+  
   
   unsigned char temp = 0x00;
     
@@ -39,18 +82,10 @@ unsigned char hamming13_8 (unsigned char byte) {
 // C8 - SEC parity bit - covers 8, 9, 10, 11, 12  
 
 // matrices
-// D12 = 1000 0000
-// D11 = 0100 0000
-// D10 = 0010 0000
-// D9  = 0001 0000
-// C8  = 1111 0000
-// D7  = 0000 1000
-// D6  = 0000 0100
-// D5  = 0000 0010
-// C4  = 1000 1110
-// D3  = 0000 0001
-// C2  = 0110 1101
-// C1  = 0101 1011
+
+
+
+
 // C0  = 0001 1111 1111 1110 (check entire result, which is 16 bit - 2 bytes)
 
 // if 1 after adding, set to 1, if 0 after adding, set to 0
@@ -106,7 +141,7 @@ int main () {
   printf("a short is %d byte(s) large\n", sizeof(unsigned short));
 
 
-  printBinary(hamming13_8(107)); // prints 107 in binary - 0110 1011
+  printBinary(hamming13_8(0x17)); // prints 107 in binary - 0110 1011
 
   putchar('\n');
 
