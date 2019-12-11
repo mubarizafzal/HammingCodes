@@ -12,9 +12,18 @@ void printBinary (unsigned char byte) {
     }
 }
 
-unsigned char hamming_13_8 (unsigned char byte) {
-  // input in form 0000xxxx
+unsigned char hamming13_8 (unsigned char byte) {
+  // input is full 8 bits, as is
+  // 0110 1011 - 107
   
+  unsigned char D12 = 0x80;
+  unsigned char C8 = 0xf0;
+  printf("D12 is : ");
+  printBinary(D12);
+  putchar('\n'); 
+  printf("C8 is : ");
+  printBinary(C8);
+  putchar('\n'); 
   // binary or hexadecimal literals?
   
   unsigned char temp = 0x00;
@@ -95,6 +104,11 @@ int main () {
 
   printf("a char is %d byte(s) large\n", sizeof(char));
   printf("a short is %d byte(s) large\n", sizeof(unsigned short));
+
+
+  printBinary(hamming13_8(107)); // prints 107 in binary - 0110 1011
+
+  putchar('\n');
 
 }
   
