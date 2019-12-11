@@ -4,41 +4,24 @@ Project concept taken from [Nifty Assignments](http://nifty.stanford.edu/2011/ha
 
 
 Relevant topics:
+
   - Error correcting codes that use parity bits
     - Single Error Correction bits (SEC) and Double Error Detection Bits (DED)
   - Binary representation and manipulation of data
   - Matrix multiplication
   - Binary I/O
+  - Bitwise operators and advanced macros
 
 
 What are parity bits and how are they used?
 
-
-
-This implementation:
-
-
-
-- what are haming codes?
-  - what are parity bits?
-  - history
-- complexity/features?
-  - single error correction, double error detection (SECDED)
-    - Hamming (13, 8)
-  - target data size?
-- functionality demonstration
-- key topics
-
-
-
-Hamming Codes:
-
-- parity bits are used to detect if the byte contains an error
-- when the byte is set to a certain value, the parity bit is set to 1 or 0 such that all the 5 bits have an even number of 1s
-- thus if the byte gets and error, it can be noticed that there are an odd number of 1s
-
-- parity bits have some issues
-  - they can detect that there was an error, but not on which bit within the byte, so a correction can't be made
-  - if multiple errors occur on the same byte, the number of 1s might become even again and despite an error occuring, it would not be noticed
-  
+  - parity bits are used to detect if some byte(s) of data contain an error
+    - an error being a bit within the data being flipped, the original value of the data is thus lost
+  - the parity bit covers certain data bits and is set to 1 or 0 such that all the bits it covers (including itself) have an even number of 1s
+    - ex. if the bits being covered had the values of 1, 0, 1, 1 then the parity bit would be set to 1
+  - thus if the data gets and error, it can be noticed that there are an odd number of 1s
+  - parity bits (SEC) have some issues
+    - they can detect that there was an error, but not on which bit within the byte, so a correction can't be made
+    - if multiple errors occur on the same byte, the number of 1s might become even again and despite an error occuring, it would not be noticed
+    - this can be solved through double error correction bits (DED), which cover all of the data bits and the parity bits as well
 
