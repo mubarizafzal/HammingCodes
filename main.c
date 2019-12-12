@@ -2,14 +2,41 @@
 #include <limits.h>
 
 // using macros for binary conversion?
+// typeof can make macros type independant
 
-void printBinary (unsigned char byte) {
-    int numBits = CHAR_BIT; 
+
+void printBinary (const void* data, size_t n) {
     
+    // how to handle literals and types ?
+    
+    typeof(size_t) numBits = n * 8;
+    
+    
+    if (n == 1) {
+    
+      while (numBits--) {
+        
+        putchar('0' + ((*((unsigned char*) data) >> numBits) & 1));
+      
+      }
+      
+    
+    } else if (n == 2) {
+    
+      while (numBits--) {
+        
+        putchar('0' + ((*((unsigned short*) data) >> numBits) & 1));
+      
+      }
+    
+    } 
+    
+    /*
     while(numBits--) { // is false when numBits = 0, i.e end of byte
     
         putchar('0' + ((byte >> numBits) & 1)); // '& 1' causes only the rightmost bit to be added
     }
+    */
 }
 
 unsigned char hamming13_8 (unsigned char byte) {
@@ -39,8 +66,9 @@ unsigned char hamming13_8 (unsigned char byte) {
   unsigned short result = 0;
   int length = 12;
   
-  unsigned char setBit = 0;
-  int numBits = CHAR_BIT;
+  unsigned short setBit = 0;
+  int charBits = sizeof(unsigned char)*8;
+  int shortBits = sizeof(unsigned short)*8;
   
   
   while (length--) {
@@ -56,7 +84,9 @@ unsigned char hamming13_8 (unsigned char byte) {
       printBinary(setBit); // odd or even
       putchar('\n'); 
       
-      // saving into result
+      //result = result | (setBit << (
+      
+      // saving into result 00
       
     
     }  
@@ -103,18 +133,20 @@ int main () {
   while (scanf("%c", &byte) != EOF) {
     if (byte != '\n') {
       printf("%X\n", byte); // as hexadecimal
-      printBinary(byte); // as binary
+      printBinary(&byte, sizeof(byte)); // as binary
       putchar('\n');
-      printBinary(byte<<1);
+      printBinary(byte<<1, sizeof(byte));
       putchar('\n');
-      printBinary(byte>>1);
+      printBinary(byte>>1), sizeof(byte);
       putchar('\n');
-      printBinary(0x00);
+      printBinary(0xf23);
       putchar('\n');
-      printBinary(0xff);
+      printBinary(0xff^0xf23);
       putchar('\n');
       unsigned char test = 23;
-      printBinary(test); // sets test to same value as 23 literal
+      unsigned short test1 = 0xffff;
+      
+      printBinary(test1); // sets test to same value as 23 literal
       putchar('\n');
       printBinary(byte^53); // 53 as a literal is the same bit sequence as '5' <- char
       putchar('\n');
@@ -132,7 +164,7 @@ int main () {
   printf("a short is %d byte(s) large\n", sizeof(unsigned short));
 
 
-  printBinary(hamming13_8(0x17)); // prints 107 in binary - 0110 1011
+  //printBinary(hamming13_8(0x17)); // prints 107 in binary - 0110 1011
 
   putchar('\n');
 
