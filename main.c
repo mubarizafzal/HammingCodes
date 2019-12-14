@@ -5,39 +5,42 @@
 // typeof can make macros type independant
 
 
-void printBinary (const void* data, size_t n) {
-    
-    // how to handle literals and types ?
-    
-    typeof(size_t) numBits = n * 8;
+void printBinary (void* data, size_t numBytes) {
+        
+    int numBits = numBytes * 8;    
     
     
-    if (n == 1) {
+    if (numBytes == sizeof(unsigned char)) {
     
+      unsigned char temp_data = *((unsigned char*) data);
       while (numBits--) {
         
-        putchar('0' + ((*((unsigned char*) data) >> numBits) & 1));
+        putchar('0' + ((temp_data >> numBits) & 1));
       
       }
-      
-    
-    } else if (n == 2) {
-    
-      while (numBits--) {
-        
-        putchar('0' + ((*((unsigned short*) data) >> numBits) & 1));
-      
-      }
-    
-    } 
-    
-    /*
-    while(numBits--) { // is false when numBits = 0, i.e end of byte
-    
-        putchar('0' + ((byte >> numBits) & 1)); // '& 1' causes only the rightmost bit to be added
     }
-    */
+    
+    if (numBytes == sizeof(unsigned short)) {
+      
+      unsigned short temp_data = *((unsigned short*) data);
+      while (numBits--) {
+        
+        putchar('0' + ((temp_data >> numBits) & 1));
+      
+      }
+    }
+    
+    if (numBytes == sizeof(unsigned int)) {
+      
+      unsigned int temp_data = *((unsigned int*) data);
+      while (numBits--) {
+        
+        putchar('0' + ((temp_data >> numBits) & 1));
+      
+      }
+    }    
 }
+
 
 unsigned char hamming13_8 (unsigned char byte) {
   // input is full 8 bits, as is
@@ -75,13 +78,13 @@ unsigned char hamming13_8 (unsigned char byte) {
     
     if (length == 4) {
       
-      while (numBits--) {
+      while (charBits--) {
         
     
-        setBit = setBit ^ (((byte >> numBits) & 1) & ((matrix[4] >> numBits) & 1));
+        setBit = setBit ^ (((byte >> charBits) & 1) & ((matrix[4] >> charBits) & 1));
       }
       
-      printBinary(setBit); // odd or even
+      printBinary(&setBit, sizeof(setBit)); // odd or even
       putchar('\n'); 
       
       //result = result | (setBit << (
@@ -101,11 +104,8 @@ unsigned char hamming13_8 (unsigned char byte) {
 // C2 - SEC parity bit - covers 2, 3, 6, 7, 10, 11
 // C4 - SEC parity bit - covers 4, 5, 6, 7, 12
 // C8 - SEC parity bit - covers 8, 9, 10, 11, 12  
-
+ 
 // matrices
-
-
-
 
 // C0  = 0001 1111 1111 1110 (check entire result, which is 16 bit - 2 bytes)
 
@@ -116,39 +116,22 @@ int main () {
 
   unsigned char byte; // size of char is 1 byte 
   
-  // byte to matrix function?
-
-  // adding bytes and storing into a short !!
   
-  
-  // (1 * 8) * (8 * 13) = 1 * 13
-  // 1 byte * 13 bytes one by one, into a 16 bit short
-
-
-
-  // matrix = [[1, 2], [3, 4]]
-  // 1 2
-  // 3 4
-
   while (scanf("%c", &byte) != EOF) {
     if (byte != '\n') {
+      
       printf("%X\n", byte); // as hexadecimal
+      
       printBinary(&byte, sizeof(byte)); // as binary
       putchar('\n');
-      printBinary(byte<<1, sizeof(byte));
-      putchar('\n');
-      printBinary(byte>>1), sizeof(byte);
-      putchar('\n');
-      printBinary(0xf23);
-      putchar('\n');
-      printBinary(0xff^0xf23);
-      putchar('\n');
-      unsigned char test = 23;
+      
       unsigned short test1 = 0xffff;
       
-      printBinary(test1); // sets test to same value as 23 literal
+      printBinary(&test1, sizeof(test1)); // sets test to same value as 23 literal
       putchar('\n');
-      printBinary(byte^53); // 53 as a literal is the same bit sequence as '5' <- char
+      
+      byte = byte^53;
+      printBinary(&byte, sizeof(byte)); // 53 as a literal is the same bit sequence as '5' <- char
       putchar('\n');
     }
   }
@@ -164,7 +147,9 @@ int main () {
   printf("a short is %d byte(s) large\n", sizeof(unsigned short));
 
 
-  //printBinary(hamming13_8(0x17)); // prints 107 in binary - 0110 1011
+  printBinary(hamming13_8(107), sizeof(107)); // prints 107 in binary - 0110 1011
+  // fix address
+
 
   putchar('\n');
 
