@@ -14,6 +14,10 @@ void printBinary (void* data, size_t numBytes) {
     
       unsigned char temp_data = *((unsigned char*) data);
       while (numBits--) {
+      
+        if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
+          putchar(' ');
+        }
         
         putchar('0' + ((temp_data >> numBits) & 1));
       
@@ -25,6 +29,10 @@ void printBinary (void* data, size_t numBytes) {
       unsigned short temp_data = *((unsigned short*) data);
       while (numBits--) {
         
+        if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
+          putchar(' ');
+        }
+        
         putchar('0' + ((temp_data >> numBits) & 1));
       
       }
@@ -34,6 +42,10 @@ void printBinary (void* data, size_t numBytes) {
       
       unsigned int temp_data = *((unsigned int*) data);
       while (numBits--) {
+ 
+        if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
+          putchar(' ');
+        }
         
         putchar('0' + ((temp_data >> numBits) & 1));
       
@@ -42,7 +54,13 @@ void printBinary (void* data, size_t numBytes) {
 }
 
 
-unsigned char hamming13_8 (unsigned char byte) {
+
+
+
+
+
+
+unsigned short hamming13_8 (unsigned char byte) {
   // input is full 8 bits, as is
   // 0110 1011 - 107
   
@@ -56,48 +74,80 @@ unsigned char hamming13_8 (unsigned char byte) {
     0x10, // D9  = 0001 0000
     0xf0, // C8  = 1111 0000
     0x08, // D7  = 0000 1000
-    0x06, // D6  = 0000 0100
-    0x04, // D5  = 0000 0010
+    0x04, // D6  = 0000 0100
+    0x02, // D5  = 0000 0010
     0x8e, // C4  = 1000 1110
     0x01, // D3  = 0000 0001
     0x6d, // C2  = 0110 1101
-    0x7b, // C1  = 0101 1011
+    0x5b, // C1  = 0101 1011
 
   
   };
   
+  unsigned short C0 = 0x1ffe; // C0  = 0001 1111 1111 1110 (checks entire result, which is 16 bit - 2 bytes)
+
+  
   unsigned short result = 0;
   int length = 12;
   
-  unsigned short setBit = 0;
-  int charBits = sizeof(unsigned char)*8;
-  int shortBits = sizeof(unsigned short)*8;
+  unsigned short setBit;
+  int charBits;
   
+  
+  printBinary(&byte, sizeof(byte));
+  putchar('\n');
   
   while (length--) {
     
-    if (length == 4) {
-      
-      while (charBits--) {
-        
     
-        setBit = setBit ^ (((byte >> charBits) & 1) & ((matrix[4] >> charBits) & 1));
-      }
-      
-      printBinary(&setBit, sizeof(setBit)); // odd or even
-      putchar('\n'); 
-      
-      //result = result | (setBit << (
-      
-      // saving into result 00
-      
+    charBits = sizeof(unsigned char)*8;
+    setBit = 0;
     
-    }  
+    
+    while (charBits--) {
+      
   
-  }  
+      setBit = setBit ^ (((byte >> charBits) & 1) & ((matrix[length] >> charBits) & 1));
+    }
+    
+    printf("bit val at pos: %d is  ", 12 - length);
+    printBinary(&setBit, sizeof(setBit)); // odd or even
+    putchar('\n'); 
+    
+    result = result | (setBit << (12 - length));
+    
+    // saving into result 00
+    
+    
+  }
   
-  return byte;
+  setBit = 0;
+  int shortBits = sizeof(unsigned short)*8;
+  
+  while (shortBits--) {
+  
+    setBit = setBit ^ (((result >> shortBits) & 1) & ((C0 >> shortBits) & 1));
+  }
+  
+  printf("bit val at pos: 0 is  ");
+  printBinary(&setBit, sizeof(setBit)); // odd or even
+  putchar('\n'); 
+  
+  result = result | setBit;
+  
+  
+  
+  return result;
 }
+
+
+
+
+
+
+
+
+
 // D12 D11 D10 D9 C8 D7 D6 D5 C4 D3 C2 C1 C0
 // C0 - DED parity bit - covers all
 // C1 - SEC parity bit - covers 1, 3, 5, 7, 9, 11
@@ -107,7 +157,6 @@ unsigned char hamming13_8 (unsigned char byte) {
  
 // matrices
 
-// C0  = 0001 1111 1111 1110 (check entire result, which is 16 bit - 2 bytes)
 
 // if 1 after adding, set to 1, if 0 after adding, set to 0
 
@@ -146,8 +195,8 @@ int main () {
   printf("a char is %d byte(s) large\n", sizeof(char));
   printf("a short is %d byte(s) large\n", sizeof(unsigned short));
 
-
-  printBinary(hamming13_8(107), sizeof(107)); // prints 107 in binary - 0110 1011
+  unsigned short value = hamming13_8(0xff);
+  printBinary(&value, sizeof(value)); // prints 107 in binary - 0110 1011
   // fix address
 
 
