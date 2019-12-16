@@ -84,7 +84,7 @@ unsigned short hamming13_8 (unsigned char byte) {
   
   };
   
-  unsigned short C0 = 0x1ffe; // C0  = 0001 1111 1111 1110 (checks entire result, which is 16 bit - 2 bytes)
+  unsigned short C0 = 0x1ffe; // C0  = 0001 1111 1111 1110 (checks entire result, which is 16 bits)
 
   
   unsigned short result = 0;
@@ -93,7 +93,7 @@ unsigned short hamming13_8 (unsigned char byte) {
   unsigned short setBit;
   int charBits;
   
-  
+  printf("In binary: ");
   printBinary(&byte, sizeof(byte));
   putchar('\n');
   
@@ -110,13 +110,9 @@ unsigned short hamming13_8 (unsigned char byte) {
       setBit = setBit ^ (((byte >> charBits) & 1) & ((matrix[length] >> charBits) & 1));
     }
     
-    printf("bit val at pos: %d is  ", 12 - length);
-    printBinary(&setBit, sizeof(setBit)); // odd or even
-    putchar('\n'); 
+    printf("Bit val at pos %d is %d\n", 12 - length, setBit);
     
     result = result | (setBit << (12 - length));
-    
-    // saving into result 00
     
     
   }
@@ -129,78 +125,50 @@ unsigned short hamming13_8 (unsigned char byte) {
     setBit = setBit ^ (((result >> shortBits) & 1) & ((C0 >> shortBits) & 1));
   }
   
-  printf("bit val at pos: 0 is  ");
-  printBinary(&setBit, sizeof(setBit)); // odd or even
-  putchar('\n'); 
+  printf("Bit val at pos 0 is %d\n", setBit);
   
   result = result | setBit;
-  
-  
   
   return result;
 }
 
 
-
-
-
-
-
-
-
-// D12 D11 D10 D9 C8 D7 D6 D5 C4 D3 C2 C1 C0
 // C0 - DED parity bit - covers all
 // C1 - SEC parity bit - covers 1, 3, 5, 7, 9, 11
 // C2 - SEC parity bit - covers 2, 3, 6, 7, 10, 11
 // C4 - SEC parity bit - covers 4, 5, 6, 7, 12
 // C8 - SEC parity bit - covers 8, 9, 10, 11, 12  
- 
-// matrices
-
-
-// if 1 after adding, set to 1, if 0 after adding, set to 0
 
 
 int main () {
 
   unsigned char byte; // size of char is 1 byte 
   
+  printf("This program scans characters byte by byte and converts each into its hamming(13, 8) representation.\n");
+  printf("8 bits are represented in 13 bits with 4 SEC parity bits and 1 DED parity bit.\n");
+  printf("Result is in the form: 0 0 0 D12 D11 D10 D9 C8 D7 D6 D5 C4 D3 C2 C1 C0.\n");
+  printf("D12 D11 D10 D9 D7 D6 D5 D3 are bits holding the binary values of the byte.\n");
+  printf("The parity bits cover different data bits, and is set to 1 or 0 so that there are an even number of 1s among its group (which includes itself).\n");
+  printf("Type 'q' to exit\n");
+  printf("----------------------------------------------------------------------------------\n");
   
   while (scanf("%c", &byte) != EOF) {
     if (byte != '\n') {
       
-      printf("%X\n", byte); // as hexadecimal
+      if (byte == 'q') {
+        break;
+      }
       
-      printBinary(&byte, sizeof(byte)); // as binary
-      putchar('\n');
+      printf("You entered '%c' which is %X in hexadecimal.\n", byte, byte); // as hexadecimal
       
-      unsigned short test1 = 0xffff;
+      unsigned short result = hamming13_8(byte);
+  
+      printf("Result: ");
+      printBinary(&result, sizeof(result));
+      putchar('\n');          
       
-      printBinary(&test1, sizeof(test1)); // sets test to same value as 23 literal
-      putchar('\n');
-      
-      byte = byte^53;
-      printBinary(&byte, sizeof(byte)); // 53 as a literal is the same bit sequence as '5' <- char
-      putchar('\n');
     }
   }
   
-  
-  int num = 2;
-  num>>1;
-  printf("does shift also assign?: %d\n", num);
-  
-  printf("inc a char by a literal: %c\n", '0' + 2); // %c is '2'
-
-  printf("a char is %d byte(s) large\n", sizeof(char));
-  printf("a short is %d byte(s) large\n", sizeof(unsigned short));
-
-  unsigned short value = hamming13_8(0xff);
-  printBinary(&value, sizeof(value)); // prints 107 in binary - 0110 1011
-  // fix address
-
-
-  putchar('\n');
-
 }
   
