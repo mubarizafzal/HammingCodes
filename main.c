@@ -2,69 +2,62 @@
 #include <limits.h>
 
 // using macros for binary conversion?
-// typeof can make macros type independant
+// using enumerations?
 
 
 void printBinary (void* data, size_t numBytes) {
-        
-    int numBits = numBytes * 8;    
-    
-    
-    if (numBytes == sizeof(unsigned char)) {
-    
-      unsigned char temp_data = *((unsigned char*) data);
-      while (numBits--) {
       
-        if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
-          putchar(' ');
-        }
-        
-        putchar('0' + ((temp_data >> numBits) & 1));
-      
+  int numBits = numBytes * 8;    
+  
+  
+  if (numBytes == sizeof(unsigned char)) {
+  
+    unsigned char temp_data = *((unsigned char*) data);
+    while (numBits--) {
+    
+      if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
+        putchar(' ');
       }
+      
+      putchar('0' + ((temp_data >> numBits) & 1));
+    
     }
+  }
+  
+  if (numBytes == sizeof(unsigned short)) {
     
-    if (numBytes == sizeof(unsigned short)) {
+    unsigned short temp_data = *((unsigned short*) data);
+    while (numBits--) {
       
-      unsigned short temp_data = *((unsigned short*) data);
-      while (numBits--) {
-        
-        if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
-          putchar(' ');
-        }
-        
-        putchar('0' + ((temp_data >> numBits) & 1));
-      
+      if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
+        putchar(' ');
       }
+      
+      putchar('0' + ((temp_data >> numBits) & 1));
+    
     }
+  }
+  
+  if (numBytes == sizeof(unsigned int)) {
     
-    if (numBytes == sizeof(unsigned int)) {
-      
-      unsigned int temp_data = *((unsigned int*) data);
-      while (numBits--) {
- 
-        if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
-          putchar(' ');
-        }
-        
-        putchar('0' + ((temp_data >> numBits) & 1));
-      
+    unsigned int temp_data = *((unsigned int*) data);
+    while (numBits--) {
+
+      if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
+        putchar(' ');
       }
-    }    
+      
+      putchar('0' + ((temp_data >> numBits) & 1));
+    
+    }
+  }    
 }
 
 
 
 
-
-
-
-
 unsigned short hamming13_8 (unsigned char byte) {
-  // input is full 8 bits, as is
-  // 0110 1011 - 107
-  
-  
+
   // matrix of length 12, starting from D12 until C1
   
   unsigned char matrix[12] = {
