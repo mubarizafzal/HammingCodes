@@ -1,6 +1,6 @@
 # A learning project for C programming.
 
-# Project concept taken from [Nifty Assignments](http://nifty.stanford.edu/2011/hansen-hamming-codes/).
+<strong>Project concept taken from [Nifty Assignments](http://nifty.stanford.edu/2011/hansen-hamming-codes/).</strong>
 
 
 <strong>Relevant topics:</strong>
