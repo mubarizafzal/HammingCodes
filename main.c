@@ -1,60 +1,18 @@
 #include <stdio.h>
 #include <limits.h>
 
-// using macros for binary conversion?
-// using enumerations?
-
-
-void printBinary (void* data, size_t numBytes) {
-      
-  int numBits = numBytes * 8;    
+// macro for printing values in binary
+#define binary(value) \
+  int numBits = sizeof(value)*8; \
+  printf("%d\n", numBits); \
+  while (numBits--) { \
+    if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != sizeof(value)*8 - 1) { \
+      putchar(' '); \
+    } \
+    putchar('0' + ((value >> numBits) & 1)); \
+  } \
+  putchar('\n')
   
-  
-  if (numBytes == sizeof(unsigned char)) {
-  
-    unsigned char temp_data = *((unsigned char*) data);
-    while (numBits--) {
-    
-      if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
-        putchar(' ');
-      }
-      
-      putchar('0' + ((temp_data >> numBits) & 1));
-    
-    }
-  }
-  
-  if (numBytes == sizeof(unsigned short)) {
-    
-    unsigned short temp_data = *((unsigned short*) data);
-    while (numBits--) {
-      
-      if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
-        putchar(' ');
-      }
-      
-      putchar('0' + ((temp_data >> numBits) & 1));
-    
-    }
-  }
-  
-  if (numBytes == sizeof(unsigned int)) {
-    
-    unsigned int temp_data = *((unsigned int*) data);
-    while (numBits--) {
-
-      if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != numBytes*8 - 1) {
-        putchar(' ');
-      }
-      
-      putchar('0' + ((temp_data >> numBits) & 1));
-    
-    }
-  }    
-}
-
-
-
 
 unsigned short hamming13_8 (unsigned char byte) {
 
@@ -87,8 +45,7 @@ unsigned short hamming13_8 (unsigned char byte) {
   int charBits;
   
   printf("In binary: ");
-  printBinary(&byte, sizeof(byte));
-  putchar('\n');
+  binary(byte);
   
   while (length--) {
     
@@ -157,8 +114,7 @@ int main () {
       result = hamming13_8(byte);
   
       printf("Result: ");
-      printBinary(&result, sizeof(result));
-      putchar('\n');          
+      binary(result);          
       
     }
   }
@@ -167,8 +123,7 @@ int main () {
   byte = 0xb3;
   result = hamming13_8(byte);
   printf("Result: ");
-  printBinary(&result, sizeof(result));
-  putchar('\n');
+  binary(result);
   */
 }
   
