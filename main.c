@@ -99,7 +99,6 @@ unsigned short hamming13_8 (unsigned char byte) {
     
     while (charBits--) {
       
-  
       setBit = setBit ^ (((byte >> charBits) & 1) & ((matrix[length] >> charBits) & 1));
     }
     
@@ -136,6 +135,7 @@ unsigned short hamming13_8 (unsigned char byte) {
 int main () {
 
   unsigned char byte; // size of char is 1 byte 
+  unsigned short result;
   
   printf("This program scans characters byte by byte and converts each into its hamming(13, 8) representation.\n");
   printf("8 bits are represented in 13 bits with 4 SEC parity bits and 1 DED parity bit.\n");
@@ -154,7 +154,7 @@ int main () {
       
       printf("You entered '%c' which is %X in hexadecimal.\n", byte, byte); // as hexadecimal
       
-      unsigned short result = hamming13_8(byte);
+      result = hamming13_8(byte);
   
       printf("Result: ");
       printBinary(&result, sizeof(result));
@@ -163,5 +163,12 @@ int main () {
     }
   }
   
+  /*  testing code
+  byte = 0xb3;
+  result = hamming13_8(byte);
+  printf("Result: ");
+  printBinary(&result, sizeof(result));
+  putchar('\n');
+  */
 }
   
