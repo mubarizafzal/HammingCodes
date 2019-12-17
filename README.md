@@ -1,9 +1,9 @@
-A work in progress. A learning project for C programming.
+#A learning project for C programming.
 
-Project concept taken from [Nifty Assignments](http://nifty.stanford.edu/2011/hansen-hamming-codes/).
+#Project concept taken from [Nifty Assignments](http://nifty.stanford.edu/2011/hansen-hamming-codes/).
 
 
-Relevant topics:
+<strong>Relevant topics:</strong>
 
   - Error correcting codes that use parity bits
     - Single Error Correction bits (SEC) and Double Error Detection Bits (DED)
@@ -13,7 +13,7 @@ Relevant topics:
   - Bitwise operators and advanced macros
 
 
-What are parity bits and how are they used?
+<strong><em>What are parity bits and how are they used?</em></strong>
 
   - parity bits are used to detect if some byte(s) of data contain an error
     - an error being a bit within the data being flipped, the original value of the data is thus lost
