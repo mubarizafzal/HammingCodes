@@ -4,7 +4,6 @@
 // macro for printing values in binary
 #define binary(value) \
   int numBits = sizeof(value)*8; \
-  printf("%d\n", numBits); \
   while (numBits--) { \
     if ((numBits + 1) % 4 == 0 && numBits != 0 && numBits != sizeof(value)*8 - 1) { \
       putchar(' '); \
