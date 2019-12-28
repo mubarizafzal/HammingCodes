@@ -15,20 +15,19 @@
 
 <strong>What are parity bits and how are they used?</strong>
 
-  - parity bits are used to detect if some byte(s) of data contain an error
+  - Parity bits are used to detect if some byte(s) of data contain an error
     - an error being a bit within the data being flipped, the original value of the data is thus lost
-  - the parity bit covers certain data bits and is set to 1 or 0 such that all the bits it covers (including itself) have an even number of 1s
+  - The parity bit covers certain data bits and is set to 1 or 0 such that all the bits it covers (including itself) have an even number of 1s
     - ex. if the bits being covered had the values of 1, 0, 1, 1 then the parity bit would be set to 1
-  - thus if the data gets and error, it can be noticed that there are an odd number of 1s
-  - parity bits (SEC) have some issues
+  - Thus if the data gets and error, it can be noticed that there are an odd number of 1s
+  - Parity bits (SEC) have some issues
     - they can detect that there was an error, but not on which bit within the byte, so a correction can't be made
     - if multiple errors occur on the same byte, the number of 1s might become even again and despite an error occuring, it would not be noticed
     - this can be solved through double error correction bits (DED), which cover all of the data bits and the parity bits as well
 
 
-<strong>How to run</strong>
+<strong>How to run:</strong>
 
-  - type 'make' in the terminal to compile
-  - then './out < testfile1' to take the test file bytes as input
-  - also './out' by itself to enter custom input
-
+  - Type "make" in the terminal to compile
+  - Then "./out < testfile1" to take the test file bytes as input
+  - Also "./out" by itself to enter custom input
